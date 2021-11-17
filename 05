@@ -1,0 +1,60 @@
+import java.util.*;
+
+public class Main {
+
+	public static void main(String args[] ) throws Exception {
+		int[][] a = new int[6][2]; 	//お金の種類と枚数を数える配列を宣言
+
+		Wallet wal = new Wallet();
+		wal.addcoin(a);
+		wal.sum(a);
+	}
+}
+
+class Wallet{	//お金の計数関連のクラス
+	private int s = 0;	//所持している硬貨の金額の合計値
+	private int x;	//枚数を数えるお金の種類の判断用
+
+	public void addcoin(int[][] a){	//硬貨の枚数測定のメソッド
+		Scanner sc = new Scanner(System.in);
+		a[0][0] = 500;	//硬貨の種類ごとにお金の受け皿を作る
+		a[1][0] = 100;
+		a[2][0] = 50;
+		a[3][0] = 10;
+		a[4][0] = 5;
+		a[5][0] = 1;
+
+		for(int i = 0; i < 6;i++){
+			a[i][1] = 0;	//すべての種類の枚数を0枚に設定（もとから0が入っているだろうけど一応）
+		}
+
+		while(true){
+			x = sc.nextInt();	//硬貨の種類の入力
+			if(x == 0){
+				break;	//硬貨の種類を書くタイミングで0が入力されたら終了
+			}
+			for(int j = 0; j < 6; j++){
+				if(a[j][0] == x){
+					a[j][1] += sc.nextInt();
+					/*硬貨の種類が受け皿と一致したら入力された枚数をその受け皿に対応した配列に加算
+					  ※同じ種類の硬貨が何回かに分けて入力される場合もあるので、それにも対応させるために+=を使う*/
+				}
+			}
+		}
+	}
+
+	public void sum(int[][] a){	//所持している硬貨の合計金額の計算メソッド
+
+		for(int i = 0;i < 6; i++){
+			s += a[i][0] * a[i][1];	//合計値用の変数に（額面）×（枚数）をかけたものを加算、それぞれの種類ごとに計算するのでfor文使用
+		}
+
+		for(int i = 0; i < 6; i++){
+			for(int j = 0; j < 2; j++){
+				System.out.print(a[i][j] + " ");	//配列の要素をすべて表示
+			}
+			System.out.println();
+		}
+		System.out.println(s);	//合計値を表示
+	}
+}
